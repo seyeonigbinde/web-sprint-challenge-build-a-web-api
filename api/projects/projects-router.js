@@ -13,7 +13,7 @@ const router = express.Router();
 
 
 router.get('/', (req, res, next) => {
-  Project.getProjectActions(req.query)
+  Project.get(req.query.length)
   .then(projects => {
     res.status(200).json(projects);
   })
