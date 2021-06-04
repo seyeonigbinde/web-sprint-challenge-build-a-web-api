@@ -19,13 +19,10 @@ const express = require('express')
 const cors = require('cors')
 const path = require('path')
 
-const server = express()
+const server = require('./api/server');
 
 server.use(express.json())
 server.use(cors())
-
-console.log(process.env.USER) 
-console.log(process.env.SHELL)
 
 if (process.env.NODE_ENV === 'production') {
   console.log('this means this code is deployed')
@@ -34,10 +31,6 @@ if (process.env.NODE_ENV === 'production') {
 const PORT = process.env.PORT || 4000
 
 console.log('port is -> ', PORT)
-
-server.get('/api/projects', (req, res) => {
-  res.json({ message: `${process.env.COHORT} ROCKS` })
-})
 
 server.use((req, res) => {
   res.status(404).json({ message: 'not found sorry' })

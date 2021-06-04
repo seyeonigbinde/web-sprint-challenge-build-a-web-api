@@ -51,7 +51,7 @@ router.post('/', validateAction, validateProjectId, (req, res, next) => {
 // });
 
 
-router.put('/:id', validateActionId, validateAction, validateProjectId, (req, res, next) => {
+router.put('/:id', validateActionId, validateAction, (req, res, next) => {
 
   Action.update(req.params.id, req.body)
   .then(action => {
@@ -63,7 +63,7 @@ router.put('/:id', validateActionId, validateAction, validateProjectId, (req, re
 });
 
 
-router.delete('/:id', validateActionId, validateProjectId, (req, res, next) => {
+router.delete('/:id', validateActionId, (req, res, next) => {
 
   Action.remove(req.params.id)
   .then(() => {

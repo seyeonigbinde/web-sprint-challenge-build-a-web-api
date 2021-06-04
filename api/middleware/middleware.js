@@ -38,6 +38,7 @@ function validateProject(req, res, next) {
 }
 
 function validateActionId(req, res, next) {
+    
     console.log('validateActionId middleware')
     Action.get(req.params.id)
       .then(action => {
@@ -57,7 +58,7 @@ function validateActionId(req, res, next) {
   
   function validateAction(req, res, next) {
    
-    const { description, notes, completed} = req.body
+    const { project_id, description, notes, completed} = req.body
     if ( !description || !notes ||!completed) {
       // validation fails
       next({
@@ -68,7 +69,7 @@ function validateActionId(req, res, next) {
     } else {
       req.action = { name: req.body.description.trim() }
       req.action = { name: req.body.notes.trim() }
-      req.action = { name: req.body.project_id }
+      req.action = { name: req.body.project_id}
       next()
       // validation succeed
     }
