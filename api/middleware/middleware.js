@@ -2,7 +2,7 @@ const Projects = require('../projects/projects-model')
 const Actions = require('../actions/actions-model')
 
 function logger(req, res, next) {
-  // DO YOUR MAGIC
+    
   console.log(`[${new Date().toLocaleString()}] ${req.method} to ${req.url}`)
 
   next();
@@ -48,10 +48,52 @@ function validateProject(req, res, next) {
   }
 }
 
+function validateActionId(req, res, next) {
+    console.log('validateActionId middleware')
+    Actions.getById(req.params.id)
+      .then(action => {
+        if (!action) {
+          res.status(404).json({
+            error: `action not found`
+          })
+        } else {
+          req.action = action
+          next()
+        }
+      })
+      .catch(err => {
+        next(err)
+      })
+  }
+  
+  function validateAction(req, res, next) {
+   
+    const { project_id , description, notes} = req.body
+    if (
+      !project_id || !description || !notes ||
+      typeof project_id !== 'number' || 
+      typeof description !== 'string' ||
+      typeof notes !== 'string'
+    ) {
+      // validation fails
+      next({
+        message: 'missing required project id, notes and description field',
+        status: 400,
+      })
+  
+    } else {
+      req.project = { name: req.body.description.trim() }
+      req.project = { name: req.body.notes.trim() }
+      next()
+      // validation succeed
+    }
+  }
 
-// do not forget to expose these functions to other modules
+  
 module.exports = {
   logger,
+  validateActionId,
+  validateAction,
   validateProject,
   validateProjectId
 }
