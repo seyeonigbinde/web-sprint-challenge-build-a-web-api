@@ -159,7 +159,34 @@ After finishing your required elements, you can push your work further. These go
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
 
 1. The core features of Node.js and Express and why they are useful.
+
+  The core features of Node.js and Express are;
+
+    a. Middleware - Middleware functions can get the request and response objects, operate on them, and (when specified) trigger some action.
+
+    b. Routing - Routing is a way to select which request handler function is executed. 
+
+    c. Routers for Application Modularity - We can break up applications into routers. 
+
+    d. Convenience Helpers - Express has many helpers that provide out of the box functionality to make writing web applications and API servers easier.
+
+    e. Views - Views provide a way to dynamically render HTML on the server and even generate it using other languages.
+
 1. Understand and explain the use of Middleware.
+
+  Middleware are functions that extend software and are used to add features to express. They can be considered as an array of functions that get executed in the order they are introduced into the server code. Middleware functions takes three parameters which are, the request object, the response object and a function that pints to the next middleware in the queue.
+
 1. The basic principles of the REST architectural style.
+
+  There are two principles we need to take note while designing a RESTful Web API. They are;
+
+    a. Everything is a resource
+    b. Each resource is accessible via a unique URL.
+
 1. Understand and explain the use of Express Routers.
+
+  Express Router behaves like a mini Express application. It is used to split our application in to sub-applications to make it modular and easier to maintain. It can have its own Routing and Middleware but it needs to exist inside an Express application. 
+
 1. Describe tooling used to manually test the correctness of an API.
+
+    Postman and HTTPie are prevalent tools used to test APIs manually. They come loaded with a lot of useful features that make testing APIs very easy and painless.
