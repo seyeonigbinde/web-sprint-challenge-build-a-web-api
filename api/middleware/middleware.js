@@ -54,9 +54,9 @@ function validateActionId(req, res, next) {
       .catch(err => {
         next(err)
       })
-  }
+}
   
-  function validateAction(req, res, next) {
+function validateAction(req, res, next) {
 
     const { project_id, description, notes} = req.body
     if ( !project_id ||!description || !notes ) {
@@ -73,7 +73,7 @@ function validateActionId(req, res, next) {
       next()
       // validation succeed
     }
-  }
+}
 
   
 module.exports = {

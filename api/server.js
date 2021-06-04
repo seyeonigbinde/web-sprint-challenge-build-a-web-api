@@ -8,7 +8,7 @@ const server = express();
 server.use((req, res, next) => {
     console.log(`[${req.method}] ${req.path}`)
     next()
-  })
+})
   
 server.use(express.json());
   
@@ -24,11 +24,11 @@ server.use((err, req, res, next) => { // eslint-disable-line
       message: err.message,
       stack: err.stack,
     })
-  });
+});
 
 server.get('/', (req, res) => {
     res.send(`<h2>Welcome to the Projects DB!</h2>`);
-  });
+});
 
 
 module.exports = server;
