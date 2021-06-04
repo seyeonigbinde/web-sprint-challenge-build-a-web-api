@@ -1,17 +1,23 @@
 const Project = require('../projects/projects-model')
 const Action = require('../actions/actions-model')
 
+function logger(req, res, next) {
+
+    console.log(`[${new Date().toLocaleString()}] ${req.method} to ${req.url}`)
+  
+    next();
+  }
 
 function validateProjectId(req, res, next) {
   console.log('validateProjectId middleware')
   Project.getById(req.params.id)
-    .then(project => {
-      if (!project) {
+    .then(projects => {
+      if (!projects) {
         res.status(404).json({
           error: `project not found`
         })
       } else {
-        req.project = project
+        req.projects = projects
         next()
       }
     })
@@ -35,8 +41,8 @@ function validateProject(req, res, next) {
     })
 
   } else {
-    req.project = { name: req.body.name.trim() }
-    req.project = { name: req.body.description.trim() }
+    req.projects = { name: req.body.name.trim() }
+    req.projects = { name: req.body.description.trim() }
     next()
     // validation succeed
   }
@@ -85,6 +91,7 @@ function validateActionId(req, res, next) {
 
   
 module.exports = {
+    logger,
   validateActionId,
   validateAction,
   validateProject,
