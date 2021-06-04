@@ -1,13 +1,6 @@
 const Project = require('../projects/projects-model')
 const Action = require('../actions/actions-model')
 
-function logger(req, res, next) {
-
-    console.log(`[${new Date().toLocaleString()}] ${req.method} to ${req.url}`)
-  
-    next();
-  }
-
 function validateProjectId(req, res, next) {
   console.log('validateProjectId middleware')
   Project.get(req.params.id)
@@ -28,8 +21,8 @@ function validateProjectId(req, res, next) {
 
 function validateProject(req, res, next) {
  
-  const { name , description, completed} = req.body
-  if ( !name || !description || !completed) {
+  const { name , description} = req.body
+  if ( !name || !description ) {
     // validation fails
     next({
       message: 'missing required name and description field',
@@ -39,7 +32,6 @@ function validateProject(req, res, next) {
   } else {
     req.projects = { name: req.body.name.trim() }
     req.projects = { name: req.body.description.trim() }
-    req.projects = { name: req.body.completed }
     next()
     // validation succeed
   }
@@ -74,9 +66,9 @@ function validateActionId(req, res, next) {
       })
   
     } else {
-      req.action = { description: req.body.description.trim() }
-      req.action = { notes: req.body.notes.trim() }
-      req.action = { completed: req.body.completed }
+      req.action = { name: req.body.description.trim() }
+      req.action = { name: req.body.notes.trim() }
+      req.action = { name: req.body.project_id }
       next()
       // validation succeed
     }
@@ -84,7 +76,6 @@ function validateActionId(req, res, next) {
 
   
 module.exports = {
-    logger,
   validateActionId,
   validateAction,
   validateProject,

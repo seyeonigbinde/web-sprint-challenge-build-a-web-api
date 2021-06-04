@@ -30,11 +30,11 @@ router.get('/:id', validateActionId, (req, res) => {
 });
 
 
-router.post('/', validateAction, validateProject, validateProjectId, (req, res, next) => {
+router.post('/', validateAction, validateProjectId, (req, res, next) => {
 
-    const postInfo = { ...req.body, project_id: req.params.id };
+    const postAction = { ...req.body, project_id: req.params.id };
 
-    Action.insert(postInfo)
+    Action.insert(postAction)
       .then(action => {
         res.status(201).json(action);
       })

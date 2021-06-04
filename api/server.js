@@ -5,21 +5,18 @@ const actionsRouter = require('./actions/actions-router');
 
 const server = express();
 
-// const { logger} = require('./middleware/middleware');
-
 server.use((req, res, next) => {
     console.log(`[${req.method}] ${req.path}`)
     next()
   })
   
-  server.use(express.json());
+server.use(express.json());
   
-//   server.use(logger);
-  server.use('/api/projects', projectsRouter); 
-  server.use('/api/actions', actionsRouter); 
+server.use('/api/projects', projectsRouter); 
+server.use('/api/actions', actionsRouter); 
   
   
-  server.use((err, req, res, next) => { // eslint-disable-line
+server.use((err, req, res, next) => { // eslint-disable-line
     
     console.log('err handling middleware kicking in!', err.message)
     res.status(err.status || 500).json({
@@ -29,7 +26,7 @@ server.use((req, res, next) => {
     })
   });
 
-  server.get('/', (req, res) => {
+server.get('/', (req, res) => {
     res.send(`<h2>Let's write some middleware!</h2>`);
   });
 // Configure your server here
