@@ -11,13 +11,13 @@ function logger(req, res, next) {
 function validateProjectId(req, res, next) {
   console.log('validateProjectId middleware')
   Project.get(req.params.id)
-    .then(projects => {
-      if (!projects) {
+    .then(project => {
+      if (!project) {
         res.status(404).json({
           error: `project not found`
         })
       } else {
-        req.projects = projects
+        req.projects = project
         next()
       }
     })
@@ -29,11 +29,7 @@ function validateProjectId(req, res, next) {
 function validateProject(req, res, next) {
  
   const { name , description} = req.body
-  if (
-    !name || !description ||
-    typeof name !== 'string' || 
-    typeof description !== 'string'
-  ) {
+  if ( !name || !description ) {
     // validation fails
     next({
       message: 'missing required name and description field',
@@ -42,7 +38,7 @@ function validateProject(req, res, next) {
 
   } else {
     req.projects = { name: req.body.name.trim() }
-    req.projects = { name: req.body.description.trim() }
+    req.projects = { description: req.body.description.trim() }
     next()
     // validation succeed
   }
@@ -68,13 +64,8 @@ function validateActionId(req, res, next) {
   
   function validateAction(req, res, next) {
    
-    const { project_id , description, notes} = req.body
-    if (
-      !project_id || !description || !notes ||
-      typeof project_id !== 'number' || 
-      typeof description !== 'string' ||
-      typeof notes !== 'string'
-    ) {
+    const { description, notes, completed} = req.body
+    if ( !description || !notes ||!completed) {
       // validation fails
       next({
         message: 'missing required project id, notes and description field',
@@ -82,8 +73,9 @@ function validateActionId(req, res, next) {
       })
   
     } else {
-      req.action = { name: req.body.description.trim() }
-      req.action = { name: req.body.notes.trim() }
+      req.action = { description: req.body.description.trim() }
+      req.action = { notes: req.body.notes.trim() }
+      req.action = { completed: req.body.completed }
       next()
       // validation succeed
     }

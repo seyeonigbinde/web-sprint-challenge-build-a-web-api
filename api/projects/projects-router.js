@@ -11,27 +11,33 @@ const Project = require('./projects-model');
 
 const router = express.Router();
 
+
 router.get('/', (req, res, next) => {
-  Project.get(req.query)
+  Project.getProjectActions(req.query)
   .then(projects => {
     res.status(200).json(projects);
   })
   .catch(next)
 });
 
-router.get('/:id', validateProjectId, (req, res) => {
 
+router.get('/:id', validateProjectId, (req, res) => {
   res.json(req.projects)
 });
 
+
 router.post('/', validateProject, (req, res, next) => {
 
-  Project.insert(req.projects)
-  .then(projects => {
-    res.status(201).json(projects);
+  Project.insert(req.project)
+  .then(({id}) => {
+    return Project.get(id)
+})
+  .then(project => {
+    res.status(201).json(project);
   })
   .catch(next);
 });
+
 
 router.put('/:id', validateProjectId, validateProject, (req, res, next) => {
 
@@ -44,6 +50,7 @@ router.put('/:id', validateProjectId, validateProject, (req, res, next) => {
   });
 });
 
+
 router.delete('/:id', validateProjectId, (req, res, next) => {
 
   Project.remove(req.params.id)
@@ -52,6 +59,7 @@ router.delete('/:id', validateProjectId, (req, res, next) => {
   })
   .catch(next);
 });
+
 
 router.get('/:id/actions', validateProjectId, (req, res, next) => {
 
