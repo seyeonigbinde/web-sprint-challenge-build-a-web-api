@@ -5,7 +5,7 @@ const actionsRouter = require('./actions/actions-router');
 
 const server = express();
 
-const { logger} = require('./middleware/middleware');
+// const { logger} = require('./middleware/middleware');
 
 server.use((req, res, next) => {
     console.log(`[${req.method}] ${req.path}`)
@@ -14,7 +14,7 @@ server.use((req, res, next) => {
   
   server.use(express.json());
   
-  server.use(logger);
+//   server.use(logger);
   server.use('/api/projects', projectsRouter); 
   server.use('/api/actions', actionsRouter); 
   

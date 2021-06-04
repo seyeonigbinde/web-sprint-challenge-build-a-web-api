@@ -10,7 +10,7 @@ function logger(req, res, next) {
 
 function validateProjectId(req, res, next) {
   console.log('validateProjectId middleware')
-  Project.getById(req.params.id)
+  Project.get(req.params.id)
     .then(projects => {
       if (!projects) {
         res.status(404).json({
@@ -50,7 +50,7 @@ function validateProject(req, res, next) {
 
 function validateActionId(req, res, next) {
     console.log('validateActionId middleware')
-    Action.getById(req.params.id)
+    Action.get(req.params.id)
       .then(action => {
         if (!action) {
           res.status(404).json({
@@ -82,8 +82,8 @@ function validateActionId(req, res, next) {
       })
   
     } else {
-      req.project = { name: req.body.description.trim() }
-      req.project = { name: req.body.notes.trim() }
+      req.action = { name: req.body.description.trim() }
+      req.action = { name: req.body.notes.trim() }
       next()
       // validation succeed
     }

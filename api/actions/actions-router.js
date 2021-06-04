@@ -7,11 +7,13 @@ const express = require('express');
 const {
   validateAction,
   validateActionId,
+  validateProjectId
 } = require('../middleware/middleware');
 
 const Action = require('./actions-model');
 
 const router = express.Router();
+
 
 router.get('/', (req, res, next) => {
   Action.get(req.query)
@@ -21,12 +23,14 @@ router.get('/', (req, res, next) => {
   .catch(next)
 });
 
+
 router.get('/:id', validateActionId, (req, res) => {
 
   res.json(req.action)
 });
 
-router.post('/', validateAction, (req, res, next) => {
+
+router.post('/', validateAction, validateProjectId, (req, res, next) => {
 
   Action.insert(req.action)
   .then(action => {
@@ -35,7 +39,8 @@ router.post('/', validateAction, (req, res, next) => {
   .catch(next);
 });
 
-router.put('/:id', validateActionId, validateAction, (req, res, next) => {
+
+router.put('/:id', validateActionId, validateAction, validateProjectId, (req, res, next) => {
 
   Action.update(req.params.id, req.body)
   .then(action => {
@@ -46,7 +51,8 @@ router.put('/:id', validateActionId, validateAction, (req, res, next) => {
   });
 });
 
-router.delete('/:id', validateActionId, (req, res, next) => {
+
+router.delete('/:id', validateActionId, validateProjectId, (req, res, next) => {
 
   Action.remove(req.params.id)
   .then(() => {
