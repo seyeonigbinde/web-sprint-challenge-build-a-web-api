@@ -28,14 +28,16 @@ router.get('/:id', validateProjectId, (req, res) => {
 
 router.post('/', validateProject, (req, res, next) => {
 
-  Project.insert(req.project)
-  .then(({id}) => {
-    return Project.get(id)
-})
-  .then(project => {
-    res.status(201).json(project);
-  })
-  .catch(next);
+    const postInfo = { ...req.body, completed: true };
+
+    Project.insert(postInfo)
+      .then(project => {
+        res.status(201).json(project);
+      })
+      .catch(error => {
+        next(error)
+      });
+
 });
 
 

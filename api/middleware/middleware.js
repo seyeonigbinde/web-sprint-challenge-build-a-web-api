@@ -28,8 +28,8 @@ function validateProjectId(req, res, next) {
 
 function validateProject(req, res, next) {
  
-  const { name , description} = req.body
-  if ( !name || !description ) {
+  const { name , description, completed} = req.body
+  if ( !name || !description || !completed) {
     // validation fails
     next({
       message: 'missing required name and description field',
@@ -38,7 +38,8 @@ function validateProject(req, res, next) {
 
   } else {
     req.projects = { name: req.body.name.trim() }
-    req.projects = { description: req.body.description.trim() }
+    req.projects = { name: req.body.description.trim() }
+    req.projects = { name: req.body.completed }
     next()
     // validation succeed
   }
