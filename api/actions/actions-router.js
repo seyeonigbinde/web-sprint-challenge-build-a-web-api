@@ -8,7 +8,6 @@ const {
   validateAction,
   validateActionId,
   validateProjectId,
-  validateProject
 } = require('../middleware/middleware');
 
 const Action = require('./actions-model');
@@ -32,9 +31,12 @@ router.get('/:id', validateActionId, (req, res) => {
 
 router.post('/', validateAction, validateProjectId, (req, res, next) => {
 
-    const postAction = { ...req.body, project_id: req.params.id };
+    const postAction = { ...req.body };
 
     Action.insert(postAction)
+        .then(({id}) => {
+        return Action.get(id)
+        })
       .then(action => {
         res.status(201).json(action);
       })
@@ -42,13 +44,6 @@ router.post('/', validateAction, validateProjectId, (req, res, next) => {
         next(error)
       });
   });
-
-//   Action.insert(req.action)
-//   .then(action => {
-//     res.status(201).json(action);
-//   })
-//   .catch(next);
-// });
 
 
 router.put('/:id', validateActionId, validateAction, (req, res, next) => {

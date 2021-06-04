@@ -57,9 +57,9 @@ function validateActionId(req, res, next) {
   }
   
   function validateAction(req, res, next) {
-   
-    const { project_id, description, notes, completed} = req.body
-    if ( !description || !notes ||!completed) {
+
+    const { project_id, description, notes} = req.body
+    if ( !project_id ||!description || !notes ) {
       // validation fails
       next({
         message: 'missing required project id, notes and description field',
