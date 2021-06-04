@@ -1,16 +1,10 @@
-const Projects = require('../projects/projects-model')
-const Actions = require('../actions/actions-model')
+const Project = require('../projects/projects-model')
+const Action = require('../actions/actions-model')
 
-function logger(req, res, next) {
-    
-  console.log(`[${new Date().toLocaleString()}] ${req.method} to ${req.url}`)
-
-  next();
-}
 
 function validateProjectId(req, res, next) {
   console.log('validateProjectId middleware')
-  Projects.getById(req.params.id)
+  Project.getById(req.params.id)
     .then(project => {
       if (!project) {
         res.status(404).json({
@@ -50,7 +44,7 @@ function validateProject(req, res, next) {
 
 function validateActionId(req, res, next) {
     console.log('validateActionId middleware')
-    Actions.getById(req.params.id)
+    Action.getById(req.params.id)
       .then(action => {
         if (!action) {
           res.status(404).json({
@@ -91,7 +85,6 @@ function validateActionId(req, res, next) {
 
   
 module.exports = {
-  logger,
   validateActionId,
   validateAction,
   validateProject,
